@@ -35,6 +35,16 @@ export default function Menu() {
         saveAs(pdfBlob, 'newFile.xlsx');
       })
   }
+  const exportTableDowloadPdf = ()=>{
+    axios.get('http://localhost:3200/note/dowloadpdf', { responseType: 'blob' })
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, 'mypdf.pdf');
+      })
+    // bodyObj = {};
+    // axios.post("").then().catch()
+  }
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,6 +64,9 @@ export default function Menu() {
       <li className="nav-item">
         <button className="nav-link active" onClick={dowloadExcel} >Dowlaod Commands as EXCEl </button>
       </li>
+      <li className="nav-item">
+        <button className="nav-link active" onClick={exportTableDowloadPdf} >Send Data && generatePDF to Dowload as PDF </button>
+      </li>
     </ul>
     {/* 
     <form onSubmit={handleSubmit} className="form-inline my-2 my-lg-0">
@@ -62,7 +75,7 @@ export default function Menu() {
       <button className="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>
     </form> */}
   </div>
-</nav>
-        </div>
-    )
+ </nav>
+ </div>
+)
 }
