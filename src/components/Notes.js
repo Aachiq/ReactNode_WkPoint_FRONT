@@ -42,6 +42,10 @@ export default function Notes() {
         .then(res=> setSearchNotes(res.data))
         .catch(err=>console.log(err));
     }
+
+    const paginate = (page)=>{
+        alert(`hello ${page}`)
+    }
    
     return (
         <div className="fluid">
@@ -120,6 +124,20 @@ export default function Notes() {
                                 }
                             </tbody>
                         </table>
+                    <div style={{display:'flex',flexDirection:'row'}}>
+                    { notes && notes.map((item,index)=>{
+                            return(
+                            <>
+                            <div style={{ cursor:"pointer", width:"20px",border:"1px",padding:"2px",backgroundColor:"grey",margin:"2px"}}
+                                onClick={()=> paginate(index)} 
+                            >
+                                {index+1}
+                            </div>
+                            </>
+                            )
+                        })
+                    }
+                    </div>
                     </div>
                 </div>
             </div>
