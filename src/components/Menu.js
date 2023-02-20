@@ -36,14 +36,38 @@ export default function Menu() {
       })
   }
   const exportTableDowloadPdf = ()=>{
+    // axios.get('http://localhost:3200/note/dowloadpdf', { responseType: 'blob' })
+    //   .then((res) => {
+    //     const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+    //     saveAs(pdfBlob, 'mypdf.pdf');
+    //   })
+    const bodyObj = {
+      users : [
+      {
+        name: "hell",
+        age: "26",
+      },
+      {
+        name: "kok",
+        age: "26",
+      },
+      {
+        name: "Vitthal",
+        age: "26",
+      },
+    ]};
+    axios.post("http://localhost:3200/note/generatepdfromhtmlbodydata",bodyObj)
+     .then((res)=>console.log(res))
+     .catch((err)=>console.log(err))
+  }
+  
+  const DowloadPdfBodyData = ()=>{
     axios.get('http://localhost:3200/note/dowloadpdf', { responseType: 'blob' })
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-        saveAs(pdfBlob, 'mypdf.pdf');
+        saveAs(pdfBlob, 'newFile.pdf');
       })
-    // bodyObj = {};
-    // axios.post("").then().catch()
-  }
+  } 
 
     return (
         <div>
@@ -66,6 +90,9 @@ export default function Menu() {
       </li>
       <li className="nav-item">
         <button className="nav-link active" onClick={exportTableDowloadPdf} >Send Data && generatePDF to Dowload as PDF </button>
+      </li>
+      <li className="nav-item">
+        <button className="nav-link active" onClick={DowloadPdfBodyData} >Send Body Data && generatePDF to Dowload as PDF </button>
       </li>
     </ul>
     {/* 
