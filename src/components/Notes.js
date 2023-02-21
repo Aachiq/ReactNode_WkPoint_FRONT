@@ -128,7 +128,7 @@ export default function Notes() {
                     { notes && notes.map((item,index)=>{
                             return(
                             <>
-                            <div style={{ cursor:"pointer", width:"20px",border:"1px",padding:"2px",backgroundColor:"grey",margin:"2px"}}
+                            <div style={{ color:"white",cursor:"pointer", width:"25px",border:"1px",padding:"5px",backgroundColor:"grey",margin:"4px"}}
                                 onClick={()=> paginate(index)} 
                             >
                                 {index+1}

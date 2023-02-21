@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
@@ -8,11 +8,32 @@ import { saveAs } from 'file-saver';
 export default function Menu() {
   // ce state doit etre global et accessible pour 
   // const [search,setSearch] = useState('');
-
+  const [publicNotif,setPublicNotif] = useState([]);
+  const [privateNotif,setPrivateNotif] = useState([]);
+  const [countPublicNotif,setCountPublicNotif] = useState();
+  const [countPrivateNotif,setCountPrivateNotif] = useState('');
+  
   // const handleSearch = (e)=>{
   //   setSearch(e.target.value);
   //   console.log(search);
   // }
+  
+  useEffect(() => {
+    axios.get('http://localhost:3200/note/publicnotification')
+        .then(res => {
+          //console.log(res.data.publicNotif)
+          setPublicNotif(res.data.publicNotif)
+        })
+        // attention ici j'ai fait (res.data.notes) !! Top 
+        .catch(err => console.log(err));
+    axios.get('http://localhost:3200/note/privatenotification')
+    .then(res => {
+      //console.log(res.data.privateNotif)
+      setPrivateNotif(res.data.privateNotif)
+    })
+    // attention ici j'ai fait (res.data.notes) !! Top 
+    .catch(err => console.log(err));
+  }, [])
 
   // const handleSubmit = (e)=>{
   //   e.preventDefault();
@@ -94,7 +115,51 @@ export default function Menu() {
       <li className="nav-item">
         <button className="nav-link active" onClick={DowloadPdfBodyData} >Send Body Data && generatePDF to Dowload as PDF </button>
       </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            public notif <span>{publicNotif.length}</span>
+          </a>
+          <ul class="dropdown-menu">
+          {
+              publicNotif && publicNotif.map((notif,index)=>{
+                 return (
+                 <>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                     <h6>{notif.title}</h6>
+                     <p>{notif.content}</p>
+                    </a>
+                    </li>
+                 </>
+                 )
+              })
+            }
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Private notif <span>{privateNotif.length}</span>
+          </a>
+          <ul class="dropdown-menu">
+          {
+              privateNotif && privateNotif.map((notif,index)=>{
+                 return (
+                 <>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                     <h6>{notif.title}</h6>
+                     <p>{notif.content}</p>
+                    </a>
+                    </li>
+                 </>
+                 )
+              })
+            }
+          </ul>
+        </li>
     </ul>
+    
+   
     {/* 
     <form onSubmit={handleSubmit} className="form-inline my-2 my-lg-0">
     {search}
